@@ -1,0 +1,1580 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="vue.js">
+    <meta name="description" content="前言：在最近学习 Vue.js 的时候，看到国外一篇讲述了如何使用 Vue.js 和 Vuex 来构建一个简单笔记的单页应用的文章。感觉收获挺多，自己在它的例子的基础上进行了一些优化和自定义功能，在这里和大家分享下学习心得。
+在这篇教程中我">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>使用 Vuex + Vue.js 构建单页应用 | Vong&#39;s Blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    
+    <script src="/libs/jquery/jquery.min.js"></script>
+    
+<meta name="generator" content="Hexo 4.2.0"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper head-container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Vong's Blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Vong's Blog</div>
+        <div class="logo-desc">
+            
+            Never really desperate, only the lost of the soul.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/wyqvong/wyqvong.github.io.git" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/wyqvong/wyqvong.github.io.git" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">使用 Vuex + Vue.js 构建单页应用</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/vue-js/">
+                                <span class="chip bg-color">vue.js</span>
+                            </a>
+                        
+                            <a href="/tags/vuex/">
+                                <span class="chip bg-color">vuex</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/vue-js/" class="post-category">
+                                vue.js
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-01-19
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2020-01-19
+                </div>
+                
+
+                
+
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>前言：在最近学习 Vue.js 的时候，看到国外一篇讲述了如何使用 Vue.js 和 Vuex 来构建一个简单笔记的单页应用的文章。感觉收获挺多，自己在它的例子的基础上进行了一些优化和自定义功能，在这里和大家分享下学习心得。</p>
+<p>在这篇教程中我们将通过构建一个笔记应用来学习如何在我们的 Vue 项目中使用 Vuex。我们将大概的过一遍什么是 Vuex.js，在项目中什么时候使用它，和如何构建我们的 Vue 应用。</p>
+<p>项目源码：vuex-notes-app；有需要的同学可以直接下载源码查看。</p>
+<h2 id="主要知识点"><a href="#主要知识点" class="headerlink" title="主要知识点"></a>主要知识点</h2><ul>
+<li>Vuex 状态管理机制的使用</li>
+<li>Vue.js 的基础 api</li>
+<li>Vue-cli 脚手架的安装及使用</li>
+<li>vur-router 的使用</li>
+<li>ES6 的语法，这里推荐看下阮一峰的入门教程</li>
+</ul>
+<h2 id="Vuex-概述"><a href="#Vuex-概述" class="headerlink" title="Vuex 概述"></a>Vuex 概述</h2><p>在我们迫不及待的开始项目之前，我们最好先花几分钟来了解下 Vuex 的核心概念。</p>
+<p>Vuex 是一个专门为 Vue.js 应用所设计的集中式状态管理架构。它借鉴了 Flux 和 Redux 的设计思想，但简化了概念，并且采用了一种为能更好发挥 Vue.js 数据响应机制而专门设计的实现。</p>
+<p>state 这样概念初次接触的时候可能会感觉到有点模糊，简单来说就是将 state 看成我们项目中使用的数据的集合。然后，Vuex 使得 组件本地状态（component local state）和 应用层级状态(application state) 有了一定的差异。</p>
+<ul>
+<li>component local state：该状态表示仅仅在组件内部使用的状态，有点类似通过配置选项传入 Vue 组件内部的意思。</li>
+<li>application level state：应用层级状态，表示同时被多个组件共享的状态层级。</li>
+</ul>
+<p>假设有这样一个场景：我们有一个父组件，同时包含两个子组件。父组件可以很容易的通过使用 props 属性来向子组件传递数据。</p>
+<p>但是问题来了，当我们的两个子组件如何和对方互相通信的？ 或者子组件如何传递数据给他父组件的？在我们的项目很小的时候，这个两个问题都不会太难，因为我们可以通过事件派发和监听来完成父组件和子组件的通信。</p>
+<p>然而，随着我们项目的增长：</p>
+<ul>
+<li>保持对所有的事件追踪将变得很困难。到底哪个事件是哪个组件派发的，哪个组件该监听哪个事件？</li>
+<li>项目逻辑分散在各个组件当中，很容易导致逻辑的混乱，不利于我们项目的维护。</li>
+<li>父组件将变得和子组件耦合越来越严重，因为它需要明确的派发和监听子组件的某些事件。</li>
+</ul>
+<p>这就是 Vuex 用来解决的问题。 Vuex 的四个核心概念分别是：</p>
+<ul>
+<li>The state tree：Vuex 使用单一状态树，用一个对象就包含了全部的应用层级状态。至此它便作为一个『唯一数据源(SSOT)』而存在。这也意味着，每个应用将仅仅包含一个 store 实例。单状态树让我们能够直接地定位任一特定的状态片段，在调试的过程中也能轻易地取得整个当前应用状态的快照。</li>
+<li>Getters：用来从 store 获取 Vue 组件数据。</li>
+<li>Mutators：事件处理器用来驱动状态的变化。</li>
+<li>Actions：可以给组件使用的函数，以此用来驱动事件处理器 mutations</li>
+</ul>
+<p>如何你暂时还不太理解这个四个概念，不用着急，我们将在后面的项目实战中详细的解释。</p>
+<p>简单解释下：</p>
+<p>Vuex 规定，属于应用层级的状态只能通过 Mutation 中的方法来修改，而派发 Mutation 中的事件只能通过 action。</p>
+<p>从左到又，从组件出发，组件中调用 action，在 action 这一层级我们可以和后台数据交互，比如获取初始化的数据源，或者中间数据的过滤等。然后在 action 中去派发 Mutation。Mutation 去触发状态的改变，状态的改变，将触发视图的更新。</p>
+<p><strong>注意事项</strong></p>
+<ul>
+<li>数据流都是单向的</li>
+<li>组件能够调用 action</li>
+<li>action 用来派发 Mutation</li>
+<li>只有 mutation 可以改变状态</li>
+<li>store 是响应式的，无论 state 什么时候更新，组件都将同步更新</li>
+</ul>
+<p><strong>环境安装</strong><br>这个应用将使用 webpack 来做模块打包，处理和热重启。使用 Vue 官方提供的脚手架 vue-cli。</p>
+<p>安装 vue-cli</p>
+<pre><code>npm install -g vue-cli</code></pre><p>注：Node.js &gt;= 4.x, 5.x 最好</p>
+<p><strong>初始化应用</strong></p>
+<pre class=" language-js"><code class="language-js">    vue init webpack vue<span class="token operator">-</span>notes<span class="token operator">-</span>app
+    cd vue<span class="token operator">-</span>notes<span class="token operator">-</span>app
+    npm install <span class="token comment" spellcheck="true">// 安装依赖包</span>
+    npm run dev <span class="token comment" spellcheck="true">// 启动服务</span></code></pre>
+<p>初始化一个项目名为vue-notes-app的应用，并选择使用 webpack 打包方式。在命令行中按照提示选择初始化配置项。其中在选择 JSLint 校验的时候，推荐选择 AirBNB 规范。</p>
+<ul>
+<li>components/ 文件夹用来存放我们的 Vue 组件</li>
+<li>vuex/ 文件夹存放的是和 Vuex store 相关的东西（state object，actions，mutators)</li>
+<li>build/ 文件是 webpack 的打包编译配置文件</li>
+<li>config/ 文件夹存放的是一些配置项，比如我们服务器访问的端口配置等</li>
+<li>dist/ 该文件夹一开始是不存在，在我们的项目经过 build 之后才会产出</li>
+<li>App.vue 根组件，所有的子组件都将在这里被引用</li>
+<li>index.html 整个项目的入口文件，将会引用我们的根组件 App.vue</li>
+<li>main.js 入口文件的 js 逻辑，在 webpack 打包之后将被注入到 index.html 中<h2 id="功能模块"><a href="#功能模块" class="headerlink" title="功能模块"></a>功能模块</h2></li>
+<li>新增笔记，新增一篇笔记，编辑区显示空的笔记内容</li>
+<li>删除笔记，删除一篇笔记之后，编辑区域显示当前笔记类别的第一项</li>
+<li>笔记列表切换，分为全部笔记和收藏笔记两种，在切换之后，编辑区域显示当前列表的第一条笔记 </li>
+<li>收藏笔记，给当前激活的笔记打上收藏的标签</li>
+</ul>
+<p><strong>项目组件划分</strong><br>在这个项目中，我们将总共使用四个组件：根组件 App.vue，操作栏组件 Toolbar.vue，别表组件 NotesList.vue，笔记编辑组件 Editor.vue。</p>
+<p><strong>创建 Vuex Store</strong><br>按照上面我们列出来的功能模块，我们在 Vuex/ 下面建立一个 store.js 文件。</p>
+<pre class=" language-js"><code class="language-js">    <span class="token keyword">import</span> Vue <span class="token keyword">from</span> <span class="token string">'vue'</span><span class="token punctuation">;</span>
+    <span class="token keyword">import</span> Vuex <span class="token keyword">from</span> <span class="token string">'vuex'</span><span class="token punctuation">;</span>
+
+    Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>Vuex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 需要维护的状态</span>
+    <span class="token keyword">const</span> state <span class="token operator">=</span> <span class="token punctuation">{</span>
+      notes<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      activeNote<span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+      show<span class="token punctuation">:</span> <span class="token string">''</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">const</span> mutations <span class="token operator">=</span> <span class="token punctuation">{</span>
+      <span class="token comment" spellcheck="true">// 初始化 state</span>
+      <span class="token function">INIT_STORE</span><span class="token punctuation">(</span>state<span class="token punctuation">,</span> data<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        state<span class="token punctuation">.</span>notes <span class="token operator">=</span> data<span class="token punctuation">.</span>notes<span class="token punctuation">,</span>
+        state<span class="token punctuation">.</span>show <span class="token operator">=</span> data<span class="token punctuation">.</span>show<span class="token punctuation">;</span>
+        state<span class="token punctuation">.</span>activeNote <span class="token operator">=</span> data<span class="token punctuation">.</span>activeNote<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token comment" spellcheck="true">// 新增笔记</span>
+      <span class="token function">NEW_NOTE</span><span class="token punctuation">(</span>state<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">var</span> newNote <span class="token operator">=</span> <span class="token punctuation">{</span>
+          id<span class="token punctuation">:</span> <span class="token operator">+</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+          title<span class="token punctuation">:</span> <span class="token string">''</span><span class="token punctuation">,</span>
+          content<span class="token punctuation">:</span> <span class="token string">''</span><span class="token punctuation">,</span>
+          favorite<span class="token punctuation">:</span> <span class="token boolean">false</span>
+        <span class="token punctuation">}</span><span class="token punctuation">;</span>
+        state<span class="token punctuation">.</span>notes<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>newNote<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        state<span class="token punctuation">.</span>activeNote <span class="token operator">=</span> newNote<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token comment" spellcheck="true">// 修改笔记</span>
+      <span class="token function">EDIT_NOTE</span><span class="token punctuation">(</span>state<span class="token punctuation">,</span> note<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        state<span class="token punctuation">.</span>activeNote <span class="token operator">=</span> note<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 修改原始数据</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> state<span class="token punctuation">.</span>notes<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">if</span><span class="token punctuation">(</span>state<span class="token punctuation">.</span>notes<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>id <span class="token operator">===</span> note<span class="token punctuation">.</span>id<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            state<span class="token punctuation">.</span>notes<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> note<span class="token punctuation">;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token comment" spellcheck="true">// 删除笔记</span>
+      <span class="token function">DELETE_NOTE</span><span class="token punctuation">(</span>state<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        state<span class="token punctuation">.</span>notes<span class="token punctuation">.</span><span class="token function">$remove</span><span class="token punctuation">(</span>state<span class="token punctuation">.</span>activeNote<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        state<span class="token punctuation">.</span>activeNote <span class="token operator">=</span> state<span class="token punctuation">.</span>notes<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">||</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token comment" spellcheck="true">// 切换笔记的收藏与取消收藏</span>
+      <span class="token function">TOGGLE_FAVORITE</span><span class="token punctuation">(</span>state<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        state<span class="token punctuation">.</span>activeNote<span class="token punctuation">.</span>favorite <span class="token operator">=</span> <span class="token operator">!</span>state<span class="token punctuation">.</span>activeNote<span class="token punctuation">.</span>favorite<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token comment" spellcheck="true">// 切换显示数据列表类型：全部 or 收藏</span>
+      <span class="token function">SET_SHOW_ALL</span><span class="token punctuation">(</span>state<span class="token punctuation">,</span> show<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        state<span class="token punctuation">.</span>show <span class="token operator">=</span> show<span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 切换数据展示，需要同步更新 activeNote</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>show <span class="token operator">===</span> <span class="token string">'favorite'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+          state<span class="token punctuation">.</span>activeNote <span class="token operator">=</span> state<span class="token punctuation">.</span>notes<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>note <span class="token operator">=</span><span class="token operator">></span> note<span class="token punctuation">.</span>favorite<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">||</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+          state<span class="token punctuation">.</span>activeNote <span class="token operator">=</span> state<span class="token punctuation">.</span>notes<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">||</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token comment" spellcheck="true">// 设置当前激活的笔记</span>
+      <span class="token function">SET_ACTIVE_NOTE</span><span class="token punctuation">(</span>state<span class="token punctuation">,</span> note<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        state<span class="token punctuation">.</span>activeNote <span class="token operator">=</span> note<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">new</span> <span class="token class-name">Vuex<span class="token punctuation">.</span>Store</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      state<span class="token punctuation">,</span>
+      mutations
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+## 创建 Vuex Actions
+
+    <span class="token operator">**</span>在 Vuex<span class="token operator">/</span> 下面建立一个 action<span class="token punctuation">.</span>js，用来给组件使用的函数。<span class="token operator">**</span>
+
+    <span class="token keyword">function</span> <span class="token function">makeAction</span><span class="token punctuation">(</span>type<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> dispatch <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token operator">...</span>args<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token function">dispatch</span><span class="token punctuation">(</span>type<span class="token punctuation">,</span> <span class="token operator">...</span>args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">const</span> initNote <span class="token operator">=</span> <span class="token punctuation">{</span>
+      id<span class="token punctuation">:</span> <span class="token operator">+</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      title<span class="token punctuation">:</span> <span class="token string">'我的笔记'</span><span class="token punctuation">,</span>
+      content<span class="token punctuation">:</span> <span class="token string">'第一篇笔记内容'</span><span class="token punctuation">,</span>
+      favorite<span class="token punctuation">:</span> <span class="token boolean">false</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 模拟初始化数据</span>
+    <span class="token keyword">const</span> initData <span class="token operator">=</span> <span class="token punctuation">{</span>
+      show<span class="token punctuation">:</span> <span class="token string">'all'</span><span class="token punctuation">,</span>
+      notes<span class="token punctuation">:</span> <span class="token punctuation">[</span>initNote<span class="token punctuation">]</span><span class="token punctuation">,</span>
+      activeNote<span class="token punctuation">:</span> initNote
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">export</span> <span class="token keyword">const</span> initStore <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> dispatch <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+      <span class="token function">dispatch</span><span class="token punctuation">(</span><span class="token string">'INIT_STORE'</span><span class="token punctuation">,</span> initData<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">// 更新当前activeNote对象</span>
+    <span class="token keyword">export</span> <span class="token keyword">const</span> updateActiveNote <span class="token operator">=</span> <span class="token function">makeAction</span><span class="token punctuation">(</span><span class="token string">'SET_ACTIVE_NOTE'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 添加一个note对象</span>
+    <span class="token keyword">export</span> <span class="token keyword">const</span> newNote <span class="token operator">=</span> <span class="token function">makeAction</span><span class="token punctuation">(</span><span class="token string">'NEW_NOTE'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 删除一个note对象</span>
+    <span class="token keyword">export</span> <span class="token keyword">const</span> deleteNote <span class="token operator">=</span> <span class="token function">makeAction</span><span class="token punctuation">(</span><span class="token string">'DELETE_NOTE'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">export</span> <span class="token keyword">const</span> toggleFavorite <span class="token operator">=</span> <span class="token function">makeAction</span><span class="token punctuation">(</span><span class="token string">'TOGGLE_FAVORITE'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">export</span> <span class="token keyword">const</span> editNote <span class="token operator">=</span> <span class="token function">makeAction</span><span class="token punctuation">(</span><span class="token string">'EDIT_NOTE'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 更新列表展示</span>
+    <span class="token keyword">export</span> <span class="token keyword">const</span> updateShow <span class="token operator">=</span> <span class="token function">makeAction</span><span class="token punctuation">(</span><span class="token string">'SET_SHOW_ALL'</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h2 id="创建-Vuex-Getters"><a href="#创建-Vuex-Getters" class="headerlink" title="创建 Vuex Getters"></a>创建 Vuex Getters</h2><pre class=" language-js"><code class="language-js"> <span class="token operator">**</span>在 vuex<span class="token operator">/</span> 下面建立一个 getter<span class="token punctuation">.</span>js 文件，用来从 store 获取数据。<span class="token operator">**</span>
+
+    <span class="token comment" spellcheck="true">// 获取 noteList,这里将会根据 state.show 的状态做数据过滤</span>
+    <span class="token keyword">export</span> <span class="token keyword">const</span> filteredNotes <span class="token operator">=</span> <span class="token punctuation">(</span>state<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span><span class="token punctuation">(</span>state<span class="token punctuation">.</span>show <span class="token operator">===</span> <span class="token string">'all'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> state<span class="token punctuation">.</span>notes <span class="token operator">||</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>state<span class="token punctuation">.</span>show <span class="token operator">===</span> <span class="token string">'favorite'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> state<span class="token punctuation">.</span>notes<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>note <span class="token operator">=</span><span class="token operator">></span> note<span class="token punctuation">.</span>favorite<span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+
+    <span class="token comment" spellcheck="true">// 获取列表展示状态 ： all or favorite</span>
+    <span class="token keyword">export</span> <span class="token keyword">const</span> show <span class="token operator">=</span> <span class="token punctuation">(</span>state<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> state<span class="token punctuation">.</span>show<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 获取当前激活 note</span>
+    <span class="token keyword">export</span> <span class="token keyword">const</span> activeNote <span class="token operator">=</span> <span class="token punctuation">(</span>state<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+      <span class="token keyword">return</span> state<span class="token punctuation">.</span>activeNote<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>以上就是我们 Vuex 的所有逻辑了，在定下了我们需要完成的功能之后，接下来就是只需要在组件中去调用 action 来实现对应的功能了。</p>
+<h2 id="路由配置"><a href="#路由配置" class="headerlink" title="路由配置"></a>路由配置</h2><p>在这里我们将使用 vue-router 来做路由，引用 bootstrap 样式。</p>
+<p>index.html</p>
+<pre class=" language-html"><code class="language-html">  <span class="token doctype">&lt;!DOCTYPE html></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>utf-8<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>vuex-notes-app<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>app<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+        <span class="token comment" spellcheck="true">&lt;!-- built files will be auto injected --></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span>
+</code></pre>
+<p>所有的入口逻辑我们都将在 main.js 中编写<br>main.js</p>
+<pre class=" language-js"><code class="language-js"> <span class="token keyword">import</span> Vue <span class="token keyword">from</span> <span class="token string">'vue'</span><span class="token punctuation">;</span>
+    <span class="token keyword">import</span> App <span class="token keyword">from</span> <span class="token string">'./App'</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">import</span> VueRouter <span class="token keyword">from</span> <span class="token string">'vue-router'</span><span class="token punctuation">;</span>
+    <span class="token keyword">import</span> VueResource <span class="token keyword">from</span> <span class="token string">'vue-resource'</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">// 路由模块和HTTP模块</span>
+    Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>VueResource<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Vue<span class="token punctuation">.</span><span class="token function">use</span><span class="token punctuation">(</span>VueRouter<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">const</span> router <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">VueRouter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    router<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      <span class="token string">'/index'</span><span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        component<span class="token punctuation">:</span> App
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    router<span class="token punctuation">.</span><span class="token function">redirect</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      <span class="token string">'*'</span><span class="token punctuation">:</span> <span class="token string">'/index'</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    router<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span>App<span class="token punctuation">,</span> <span class="token string">'#app'</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h2 id="根组件-App-vue"><a href="#根组件-App-vue" class="headerlink" title="根组件 App.vue"></a>根组件 App.vue</h2><pre class=" language-js"><code class="language-js"><span class="token operator">&lt;</span>template<span class="token operator">></span>
+      <span class="token operator">&lt;</span>div id<span class="token operator">=</span><span class="token string">"app"</span> <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"app"</span><span class="token operator">></span>
+        <span class="token operator">&lt;</span>toolbar<span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>toolbar<span class="token operator">></span>
+        <span class="token operator">&lt;</span>notes<span class="token operator">-</span>list<span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>notes<span class="token operator">-</span>list<span class="token operator">></span>
+        <span class="token operator">&lt;</span>editor<span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>editor<span class="token operator">></span>
+      <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>template<span class="token operator">></span>
+
+    <span class="token operator">&lt;</span>style<span class="token operator">></span>
+      html<span class="token punctuation">,</span> #app <span class="token punctuation">{</span>
+        height<span class="token punctuation">:</span> <span class="token number">100</span><span class="token operator">%</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+
+      body <span class="token punctuation">{</span>
+        margin<span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        padding<span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        border<span class="token punctuation">:</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        height<span class="token punctuation">:</span> <span class="token number">100</span><span class="token operator">%</span><span class="token punctuation">;</span>
+        max<span class="token operator">-</span>height<span class="token punctuation">:</span> <span class="token number">100</span><span class="token operator">%</span><span class="token punctuation">;</span>
+        position<span class="token punctuation">:</span> relative<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>style<span class="token operator">></span>
+
+    <span class="token operator">&lt;</span>script<span class="token operator">></span>
+      <span class="token keyword">import</span> Toolbar <span class="token keyword">from</span> <span class="token string">'./components/Toolbar'</span><span class="token punctuation">;</span>
+      <span class="token keyword">import</span> NotesList <span class="token keyword">from</span> <span class="token string">'./components/NotesList'</span><span class="token punctuation">;</span>
+      <span class="token keyword">import</span> Editor <span class="token keyword">from</span> <span class="token string">'./components/Editor'</span><span class="token punctuation">;</span>
+      <span class="token keyword">import</span> store <span class="token keyword">from</span> <span class="token string">'./vuex/store'</span><span class="token punctuation">;</span>
+      <span class="token keyword">import</span> <span class="token punctuation">{</span> initStore <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./vuex/actions'</span><span class="token punctuation">;</span>
+
+      <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+        components<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+          Toolbar<span class="token punctuation">,</span>
+          NotesList<span class="token punctuation">,</span>
+          Editor
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        store<span class="token punctuation">,</span>
+        vuex<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+          actions<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+            initStore
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token function">ready</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+          <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">initStore</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span></code></pre>
+<p>在根组件中引用了三个子组件：Toolbar.vue, NotesList.vue, Editor.vue。</p>
+<p>注意：我们在配置里面加入了 vuex 这么一个选项，这里用来将我们 action 里面定义的方法给暴露出来，我们在根组件中只做了一件事情，那就是初始化模拟数据，因此我们在组件生命周期的 ready 阶段调用了 actions 里面的 initStore 来初始化我们的 store 里面的 state</p>
+<p><strong>Toolbar.vue</strong></p>
+<pre class=" language-js"><code class="language-js"> <span class="token operator">&lt;</span>template<span class="token operator">></span>
+      <span class="token operator">&lt;</span>div id<span class="token operator">=</span><span class="token string">"toolbar"</span><span class="token operator">></span>
+        <span class="token operator">&lt;</span>i <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"glyphicon logo"</span><span class="token operator">></span><span class="token operator">&lt;</span>img src<span class="token operator">=</span><span class="token string">"../assets/logo.png"</span> width<span class="token operator">=</span><span class="token string">"30"</span> height<span class="token operator">=</span><span class="token string">"30"</span><span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>i<span class="token operator">></span>
+        <span class="token operator">&lt;</span>i @click<span class="token operator">=</span><span class="token string">"newNote"</span> <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"glyphicon glyphicon-plus"</span><span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>i<span class="token operator">></span>
+        <span class="token operator">&lt;</span>i @click<span class="token operator">=</span><span class="token string">"toggleFavorite"</span> <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"glyphicon glyphicon-star"</span> <span class="token punctuation">:</span><span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"{starred: activeNote.favorite}"</span><span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>i<span class="token operator">></span>
+        <span class="token operator">&lt;</span>i @click<span class="token operator">=</span><span class="token string">"deleteNote"</span> <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"glyphicon glyphicon-remove"</span><span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>i<span class="token operator">></span>
+      <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>template<span class="token operator">></span>
+
+    <span class="token operator">&lt;</span>script<span class="token operator">></span>
+    <span class="token keyword">import</span> <span class="token punctuation">{</span> newNote<span class="token punctuation">,</span> deleteNote<span class="token punctuation">,</span> toggleFavorite <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'../vuex/actions'</span><span class="token punctuation">;</span>
+    <span class="token keyword">import</span> <span class="token punctuation">{</span> activeNote <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'../vuex/getters'</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+      vuex<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+        getters<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+          activeNote
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        actions<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+          newNote<span class="token punctuation">,</span>
+          deleteNote<span class="token punctuation">,</span>
+          toggleFavorite
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span>
+
+    <span class="token operator">&lt;</span>style lang<span class="token operator">=</span><span class="token string">"scss"</span> scoped<span class="token operator">></span>
+      #toolbar<span class="token punctuation">{</span>
+        float<span class="token punctuation">:</span> left<span class="token punctuation">;</span>
+        width<span class="token punctuation">:</span> 80px<span class="token punctuation">;</span>
+        height<span class="token punctuation">:</span> <span class="token number">100</span><span class="token operator">%</span><span class="token punctuation">;</span>
+        background<span class="token operator">-</span>color<span class="token punctuation">:</span> #30414D<span class="token punctuation">;</span>
+        color<span class="token punctuation">:</span> #<span class="token number">767676</span><span class="token punctuation">;</span>
+        padding<span class="token punctuation">:</span> 35px 25px 25px 25px<span class="token punctuation">;</span>
+
+        <span class="token punctuation">.</span>starred <span class="token punctuation">{</span>
+          color<span class="token punctuation">:</span> #F7AE4F<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        i<span class="token punctuation">{</span>
+          font<span class="token operator">-</span>size<span class="token punctuation">:</span> 30px<span class="token punctuation">;</span>
+          margin<span class="token operator">-</span>bottom<span class="token punctuation">:</span> 35px<span class="token punctuation">;</span>
+          cursor<span class="token punctuation">:</span> pointer<span class="token punctuation">;</span>
+          opacity<span class="token punctuation">:</span> <span class="token number">0.8</span><span class="token punctuation">;</span>
+          transition<span class="token punctuation">:</span> opacity <span class="token number">0</span><span class="token punctuation">.</span>5s ease<span class="token punctuation">;</span>
+
+          <span class="token operator">&amp;</span><span class="token punctuation">:</span>hover<span class="token punctuation">{</span>
+            opacity<span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">;</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>style<span class="token operator">></span></code></pre>
+<p>在这里，我们用到了 Vuex 的一个案例就是我们需要知道当前的激活的笔记是否是收藏类别的，如果是，我们需要高亮收藏按钮，那么如何知道呢？那就是通过 vuex 里面的 getters 获取当前激活的笔记对象，判断它的 favorite 是否为 true。</p>
+<p>始终牢记一个概念，vuex 中数据是单向的，只能从 store 获取，而我们这个例子中的 activeNote 也是始终都在 store.js 中维护的，这样子就可以给其他组件公用了</p>
+<pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">// 需要维护的状态</span>
+    <span class="token keyword">const</span> state <span class="token operator">=</span> <span class="token punctuation">{</span>
+      notes<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      activeNote<span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+      show<span class="token punctuation">:</span> <span class="token string">''</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p><strong>NotesList.vue</strong></p>
+<pre class=" language-js"><code class="language-js"> <span class="token operator">&lt;</span>template<span class="token operator">></span>
+      <span class="token operator">&lt;</span>div id<span class="token operator">=</span><span class="token string">"notes-list"</span><span class="token operator">></span>
+        <span class="token operator">&lt;</span>div id<span class="token operator">=</span><span class="token string">"list-header"</span><span class="token operator">></span>
+          <span class="token operator">&lt;</span>h2<span class="token operator">></span>Notes <span class="token operator">|</span> heavenru<span class="token punctuation">.</span>com<span class="token operator">&lt;</span><span class="token operator">/</span>h2<span class="token operator">></span>
+          <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"btn-group btn-group-justified"</span> role<span class="token operator">=</span><span class="token string">"group"</span><span class="token operator">></span>
+            <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> all <span class="token operator">--</span><span class="token operator">></span>
+            <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"btn-group"</span> role<span class="token operator">=</span><span class="token string">"group"</span><span class="token operator">></span>
+              <span class="token operator">&lt;</span>button type<span class="token operator">=</span><span class="token string">"button"</span> <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"btn btn-default"</span>
+                @click<span class="token operator">=</span><span class="token string">"toggleShow('all')"</span>
+                <span class="token punctuation">:</span><span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"{active: show === 'all'}"</span><span class="token operator">></span>All Notes<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span>
+            <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+
+            <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> favorites <span class="token operator">--</span><span class="token operator">></span>
+            <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"btn-group"</span> role<span class="token operator">=</span><span class="token string">"group"</span><span class="token operator">></span>
+              <span class="token operator">&lt;</span>button type<span class="token operator">=</span><span class="token string">"button"</span> <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"btn btn-default"</span>
+                @click<span class="token operator">=</span><span class="token string">"toggleShow('favorite')"</span>
+                <span class="token punctuation">:</span><span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"{active: show === 'favorite'}"</span><span class="token operator">></span>Favorites<span class="token operator">&lt;</span><span class="token operator">/</span>button<span class="token operator">></span>
+            <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+          <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+        <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+
+        <span class="token operator">&lt;</span><span class="token operator">!</span><span class="token operator">--</span> 渲染笔记列表 <span class="token operator">--</span><span class="token operator">></span>
+        <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"container"</span><span class="token operator">></span>
+          <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"list-group"</span><span class="token operator">></span>
+            <span class="token operator">&lt;</span>a v<span class="token operator">-</span><span class="token keyword">for</span><span class="token operator">=</span><span class="token string">"note in filteredNotes"</span>
+             <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"list-group-item"</span> href<span class="token operator">=</span><span class="token string">"#"</span>
+             <span class="token punctuation">:</span><span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"{active: activeNote === note}"</span>
+             @click<span class="token operator">=</span><span class="token string">"updateActiveNote(note)"</span><span class="token operator">></span>
+              <span class="token operator">&lt;</span>h4 <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"list-group-item-heading"</span><span class="token operator">></span>
+                <span class="token punctuation">{</span><span class="token punctuation">{</span>note<span class="token punctuation">.</span>title<span class="token punctuation">.</span><span class="token function">trim</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">30</span><span class="token punctuation">)</span><span class="token punctuation">}</span><span class="token punctuation">}</span>
+              <span class="token operator">&lt;</span><span class="token operator">/</span>h4<span class="token operator">></span>
+            <span class="token operator">&lt;</span><span class="token operator">/</span>a<span class="token operator">></span>
+          <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+        <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+      <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>template<span class="token operator">></span>
+
+    <span class="token operator">&lt;</span>script<span class="token operator">></span>
+      <span class="token keyword">import</span> <span class="token punctuation">{</span> updateActiveNote<span class="token punctuation">,</span> updateShow <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'../vuex/actions'</span><span class="token punctuation">;</span>
+      <span class="token keyword">import</span> <span class="token punctuation">{</span> show<span class="token punctuation">,</span> filteredNotes<span class="token punctuation">,</span> activeNote <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'../vuex/getters'</span><span class="token punctuation">;</span>
+
+      <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+        vuex<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+          getters<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+            show<span class="token punctuation">,</span>
+            filteredNotes<span class="token punctuation">,</span>
+            activeNote
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          actions<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+            updateActiveNote<span class="token punctuation">,</span>
+            updateShow
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        methods<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+          <span class="token function">toggleShow</span><span class="token punctuation">(</span>show<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">updateShow</span><span class="token punctuation">(</span>show<span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span></code></pre>
+<p>笔记列表组件，主要有三个操作</p>
+<ul>
+<li>渲染笔记</li>
+<li>切换渲染笔记</li>
+<li>点击列表 title，切换 activeNote</li>
+</ul>
+<p>我们通过 getters 中的 filteredNotes 方法获取笔记列表</p>
+<pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">// 获取 noteList,这里将会根据 state.show 的状态做数据过滤</span>
+    <span class="token keyword">export</span> <span class="token keyword">const</span> filteredNotes <span class="token operator">=</span> <span class="token punctuation">(</span>state<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span><span class="token punctuation">(</span>state<span class="token punctuation">.</span>show <span class="token operator">===</span> <span class="token string">'all'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> state<span class="token punctuation">.</span>notes <span class="token operator">||</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>state<span class="token punctuation">.</span>show <span class="token operator">===</span> <span class="token string">'favorite'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token keyword">return</span> state<span class="token punctuation">.</span>notes<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>note <span class="token operator">=</span><span class="token operator">></span> note<span class="token punctuation">.</span>favorite<span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>可以看到，我们获取的列表是依赖于 state.show 这个状态的。而我们的切换列表操作恰好就是调用 actions 里面的方法来更新 state.show，这样一来，实现了数据列表的动态刷新，而且我们对树的操作都是通过调用 actions 的方法来实现的。</p>
+<p>我们再看，在切换列表的时候，我们还需要动态的更新 activeNote。看看我们在 store.js 中是如何做的：</p>
+<pre class=" language-js"><code class="language-js">  <span class="token comment" spellcheck="true">// 切换显示数据列表类型：全部 or 收藏</span>
+    <span class="token function">SET_SHOW_ALL</span><span class="token punctuation">(</span>state<span class="token punctuation">,</span> show<span class="token punctuation">)</span><span class="token punctuation">{</span>
+      state<span class="token punctuation">.</span>show <span class="token operator">=</span> show<span class="token punctuation">;</span>
+      <span class="token comment" spellcheck="true">// 切换数据展示，需要同步更新 activeNote</span>
+      <span class="token keyword">if</span><span class="token punctuation">(</span>show <span class="token operator">===</span> <span class="token string">'favorite'</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+        state<span class="token punctuation">.</span>activeNote <span class="token operator">=</span> state<span class="token punctuation">.</span>notes<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>note <span class="token operator">=</span><span class="token operator">></span> note<span class="token punctuation">.</span>favorite<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">||</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+        state<span class="token punctuation">.</span>activeNote <span class="token operator">=</span> state<span class="token punctuation">.</span>notes<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">||</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span></code></pre>
+<p>触发这些操作的是我们给两个按钮分别绑定了我们自定义的函数，通过给函数传入不同的参数，然后调用 actions 里面的方法，来实现对数据的过滤，更新。</p>
+<p><strong>Editor.vue</strong></p>
+<pre class=" language-js"><code class="language-js"> <span class="token operator">&lt;</span>template<span class="token operator">></span>
+      <span class="token operator">&lt;</span>div id<span class="token operator">=</span><span class="token string">"note-editor"</span><span class="token operator">></span>
+        <span class="token operator">&lt;</span>div <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"form-group"</span><span class="token operator">></span>
+          <span class="token operator">&lt;</span>input type<span class="token operator">=</span><span class="token string">"text"</span> name<span class="token operator">=</span><span class="token string">"title"</span>
+            <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"title form-control"</span>
+            placeholder<span class="token operator">=</span><span class="token string">"请输入标题"</span>
+            @input<span class="token operator">=</span><span class="token string">"updateNote"</span>
+            v<span class="token operator">-</span>model<span class="token operator">=</span><span class="token string">"currentNote.title"</span><span class="token operator">></span>
+          <span class="token operator">&lt;</span>textarea
+            v<span class="token operator">-</span>model<span class="token operator">=</span><span class="token string">"currentNote.content"</span> name<span class="token operator">=</span><span class="token string">"content"</span>
+            <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"form-control"</span> row<span class="token operator">=</span><span class="token string">"3"</span> placeholder<span class="token operator">=</span><span class="token string">"请输入正文"</span>
+            @input<span class="token operator">=</span><span class="token string">"updateNote"</span><span class="token operator">></span><span class="token operator">&lt;</span><span class="token operator">/</span>textarea<span class="token operator">></span>
+        <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+      <span class="token operator">&lt;</span><span class="token operator">/</span>div<span class="token operator">></span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>template<span class="token operator">></span>
+
+    <span class="token operator">&lt;</span>script<span class="token operator">></span>
+      <span class="token keyword">import</span> <span class="token punctuation">{</span> editNote <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'../vuex/actions'</span><span class="token punctuation">;</span>
+      <span class="token keyword">import</span> <span class="token punctuation">{</span> activeNote <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'../vuex/getters'</span><span class="token punctuation">;</span>
+
+      <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+        vuex<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+          getters<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+            activeNote
+          <span class="token punctuation">}</span><span class="token punctuation">,</span>
+          actions<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+            editNote
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        computed<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+          <span class="token comment" spellcheck="true">// 通过计算属性得到的一个对象，这样子我们就能愉快的使用 v-model 了</span>
+          currentNote<span class="token punctuation">:</span> activeNote
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        methods<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+          <span class="token comment" spellcheck="true">// 为什么这么做？ 因为在严格模式中不允许直接在模板层面去修改 state 中的值</span>
+          <span class="token function">updateNote</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">editNote</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>currentNote<span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token operator">&lt;</span><span class="token operator">/</span>script<span class="token operator">></span></code></pre>
+<p>在 Editor.vue 组件中，我们需要能够实时的更新当前的 activeNote 组件和列表中对应的我们正在修改的笔记对象的内容。</p>
+<p>由于我们前面提到过，在组件中是不允许直接修改 store.js在里面的状态值的，所以在这里的时候，我们通过一个计算属性，将 store 里面的状态值赋值给一个对象，然后在自定义的 updateNotes() 方法中，去调用 action，同时传入 currentNote 对象。</p>
+<p>在 store.js 中，我们是这么做的，找到对应的 id 的对象，重新赋值，因为前面提到过，我们的数据是响应式的，在这里进行了改变，对应的视图也将刷新改变，这样一来就实现了实时编辑，实时渲染的功能了。</p>
+<pre class=" language-js"><code class="language-js"> <span class="token comment" spellcheck="true">// 修改笔记</span>
+    <span class="token function">EDIT_NOTE</span><span class="token punctuation">(</span>state<span class="token punctuation">,</span> note<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      state<span class="token punctuation">.</span>activeNote <span class="token operator">=</span> note<span class="token punctuation">;</span>
+      <span class="token comment" spellcheck="true">// 修改原始数据</span>
+      <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> state<span class="token punctuation">.</span>notes<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>state<span class="token punctuation">.</span>notes<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>id <span class="token operator">===</span> note<span class="token punctuation">.</span>id<span class="token punctuation">)</span><span class="token punctuation">{</span>
+          state<span class="token punctuation">.</span>notes<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> note<span class="token punctuation">;</span>
+          <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span></code></pre>
+<h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><p>在这个项目中，我们并没有引入 vue-resource 插件，只是自己模拟了部分的数据，有兴趣的同学可以自己去试试。</p>
+<p>由于我们的例子相对简单，没有涉及到很深入的东西，更深层次的研究需要大家花更多的时间去实践了。</p>
+<p>最后，再说一句，在 action 里面，我们其实可以做的还有更多，比如根据 id 动态的异步获取笔记内容等等，这些有兴趣的同学可以自己去尝试，一点点的丰富这个例子。</p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://wyqvong.github.io" rel="external nofollow noreferrer">王韵芊</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://wyqvong.github.io/2020/01/19/shi-yong-vuex-vue.js-gou-jian-dan-ye-ying-yong-gou-jian-dan-ye-ying-yong/">https://wyqvong.github.io/2020/01/19/shi-yong-vuex-vue.js-gou-jian-dan-ye-ying-yong-gou-jian-dan-ye-ying-yong/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="https://wyqvong.github.io" target="_blank">王韵芊</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/vue-js/">
+                                    <span class="chip bg-color">vue.js</span>
+                                </a>
+                            
+                                <a href="/tags/vuex/">
+                                    <span class="chip bg-color">vuex</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/01/19/vue-shi-yong-axios-fa-song-qing-qiu-huo-dai-can-shu-de-qing-qiu/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="vue使用axios发送请求或带参数的请求">
+                        
+                        <span class="card-title">vue使用axios发送请求或带参数的请求</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            首先，在main.js中引入在这个时候，你还是无法在组件中使用axios的，但如果将vue改为vue的原型链，就可以解决这个问题，如下图
+(https://img-blog.csdnimg.cn/20190919142438894.png?
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-01-19
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/axios/" class="post-category">
+                                    axios
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/vue-js/">
+                        <span class="chip bg-color">vue.js</span>
+                    </a>
+                    
+                    <a href="/tags/axios/">
+                        <span class="chip bg-color">axios</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/01/19/dian-ji-a-biao-qian-shi-xian-xia-zai-wen-jian/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="点击a标签实现下载文件">
+                        
+                        <span class="card-title">点击a标签实现下载文件</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            &lt;a href="文件的地址" >写啥都行&lt;/a>
+&lt;a href="文件的地址" download="">写啥都行&lt;/a>//如果遇到图片或者txt等浏览器可以直接打开的文件需要下载的话就要加上download="
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-19
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/HTML/" class="post-category">
+                                    HTML
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/HTML/">
+                        <span class="chip bg-color">HTML</span>
+                    </a>
+                    
+                    <a href="/tags/a%E6%A0%87%E7%AD%BE/">
+                        <span class="chip bg-color">a标签</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+    <footer class="page-footer bg-color">
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2020</span>
+            <a href="https://wyqvong.github.io" target="_blank">wyqvong</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/wyqvong" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:874744558@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=874744558" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 874744558" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

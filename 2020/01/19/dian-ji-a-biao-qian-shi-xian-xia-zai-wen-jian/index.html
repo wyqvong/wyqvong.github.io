@@ -5,9 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="a标签">
-    <meta name="description" content="Tip：框架是用了vuehref=”javascript:阻止刷新页面或跳转
-&amp;lt;a href=&#34;javascript:;&#34; @click=&#34;addfile&#34;&gt;{{listext[1].text}}&amp;lt;/a&gt;
-&amp;lt;input t">
+    <meta name="description" content="&amp;lt;a href=&#34;文件的地址&#34; &gt;写啥都行&amp;lt;/a&gt;
+&amp;lt;a href=&#34;文件的地址&#34; download=&#34;&#34;&gt;写啥都行&amp;lt;/a&gt;//如果遇到图片或者txt等浏览器可以直接打开的文件需要下载的话就要加上download=&#34;">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -15,7 +14,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>阻止a标签刷新页面或跳转并实现上传文件功能 | Vong&#39;s Blog</title>
+    <title>点击a标签实现下载文件 | Vong&#39;s Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -283,12 +282,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">阻止a标签刷新页面或跳转并实现上传文件功能</h1>
+                    <h1 class="description center-align post-title">点击a标签实现下载文件</h1>
                 </div>
             </div>
         </div>
@@ -461,19 +460,10 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><strong>Tip：框架是用了vue</strong><br><strong>href=”javascript:阻止刷新页面或跳转</strong></p>
-<pre class=" language-javascript"><code class="language-javascript"><span class="token operator">&lt;</span>a href<span class="token operator">=</span><span class="token string">"javascript:;"</span> @click<span class="token operator">=</span><span class="token string">"addfile"</span><span class="token operator">></span><span class="token punctuation">{</span><span class="token punctuation">{</span>listext<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>text<span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token operator">&lt;</span><span class="token operator">/</span>a<span class="token operator">></span>
-<span class="token operator">&lt;</span>input type<span class="token operator">=</span><span class="token string">"file"</span> ref<span class="token operator">=</span><span class="token string">"fileInput"</span> <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"inputfile"</span> <span class="token operator">></span></code></pre>
-<p><strong>因为仅靠a标签是做不到上传文件的，所以借助了表单的input来完成上传文件。</strong><br><em>点击a标签后触发点击input</em></p>
-<pre class=" language-js"><code class="language-js">methods<span class="token punctuation">:</span><span class="token punctuation">{</span>
-    <span class="token function">addfile</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-      <span class="token keyword">this</span><span class="token punctuation">.</span>$refs<span class="token punctuation">.</span>fileInput<span class="token punctuation">.</span><span class="token function">click</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span>
-  <span class="token punctuation">}</span></code></pre>
-<p><strong>css部分，input的样式是要设置成隐藏</strong></p>
-<pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.inputfile</span></span><span class="token punctuation">{</span>
-  <span class="token property">display</span><span class="token punctuation">:</span>none<span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre>
+                <pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>文件的地址<span class="token punctuation">"</span></span> <span class="token punctuation">></span></span>写啥都行<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>a</span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>文件的地址<span class="token punctuation">"</span></span> <span class="token attr-name">download</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span><span class="token punctuation">"</span></span><span class="token punctuation">></span></span>写啥都行<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>a</span><span class="token punctuation">></span></span>//如果遇到图片或者txt等浏览器可以直接打开的文件需要下载的话就要加上download=""这个属性。
+download不给值，会使用默认的文件名。
+该属性也可以设置一个值来规定下载的文件的名称。属性的值没有限制，浏览器会自动检测文件扩展名添加到文件的后缀。</code></pre>
 
             </div>
             <hr/>
@@ -499,7 +489,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://wyqvong.github.io/2020/01/19/zu-zhi-a-biao-qian-shua-xin-ye-mian-huo-tiao-zhuan-bing-shi-xian-shang-chuan-wen-jian-gong-neng/">https://wyqvong.github.io/2020/01/19/zu-zhi-a-biao-qian-shua-xin-ye-mian-huo-tiao-zhuan-bing-shi-xian-shang-chuan-wen-jian-gong-neng/</a>
+                    <a href="https://wyqvong.github.io/2020/01/19/dian-ji-a-biao-qian-shi-xian-xia-zai-wen-jian/">https://wyqvong.github.io/2020/01/19/dian-ji-a-biao-qian-shi-xian-xia-zai-wen-jian/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -712,6 +702,60 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
+                <a href="/2020/01/19/shi-yong-vuex-vue.js-gou-jian-dan-ye-ying-yong-gou-jian-dan-ye-ying-yong/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="使用 Vuex + Vue.js 构建单页应用">
+                        
+                        <span class="card-title">使用 Vuex + Vue.js 构建单页应用</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            前言：在最近学习 Vue.js 的时候，看到国外一篇讲述了如何使用 Vue.js 和 Vuex 来构建一个简单笔记的单页应用的文章。感觉收获挺多，自己在它的例子的基础上进行了一些优化和自定义功能，在这里和大家分享下学习心得。
+在这篇教程中我
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-01-19
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/vue-js/" class="post-category">
+                                    vue.js
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/vue-js/">
+                        <span class="chip bg-color">vue.js</span>
+                    </a>
+                    
+                    <a href="/tags/vuex/">
+                        <span class="chip bg-color">vuex</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
                 <a href="/2020/01/19/git-chang-yong-zhi-ling-yi-ji-git-zai-vscode-zhong-de-shi-yong/">
                     <div class="card-image">
                         
@@ -732,9 +776,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-01-19
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-19
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -754,43 +798,6 @@
                         <span class="chip bg-color">git</span>
                     </a>
                     
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2020/01/19/hello-world/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
-                        
-                        <span class="card-title">Hello World</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-19
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            wyqvong
-                            
-                        </span>
-                    </div>
                 </div>
                 
             </div>
