@@ -4,10 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="a标签">
-    <meta name="description" content="Tip：框架是用了vuehref=”javascript:阻止刷新页面或跳转
-&amp;lt;a href=&#34;javascript:;&#34; @click=&#34;addfile&#34;&gt;{{listext[1].text}}&amp;lt;/a&gt;
-&amp;lt;input t">
+    <meta name="keywords" content="qs">
+    <meta name="description" content="qs当我用了几次qs以后就发现了个坑向后台传递数组参数的时候其实是有很多种情况的
+qs的基础使用
+import qs from &#39;qs&#39;   //引入方式
+this.qs.stringify(data);  //使用方式
+this.qs.p">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -15,7 +17,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>阻止a标签刷新页面或跳转并实现上传文件功能 | Vong&#39;s</title>
+    <title>vue使用axios+qs向后台传递参数，传递数组参数，传递包含对象的数组参数的解决方法 | Vong&#39;s</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -283,12 +285,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">阻止a标签刷新页面或跳转并实现上传文件功能</h1>
+                    <h1 class="description center-align post-title">vue使用axios+qs向后台传递参数，传递数组参数，传递包含对象的数组参数的解决方法</h1>
                 </div>
             </div>
         </div>
@@ -405,12 +407,16 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/HTML/">
-                                <span class="chip bg-color">HTML</span>
+                            <a href="/tags/vue-js/">
+                                <span class="chip bg-color">vue.js</span>
                             </a>
                         
-                            <a href="/tags/a%E6%A0%87%E7%AD%BE/">
-                                <span class="chip bg-color">a标签</span>
+                            <a href="/tags/axios/">
+                                <span class="chip bg-color">axios</span>
+                            </a>
+                        
+                            <a href="/tags/qs/">
+                                <span class="chip bg-color">qs</span>
                             </a>
                         
                     </div>
@@ -421,8 +427,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/HTML/" class="post-category">
-                                HTML
+                            <a href="/categories/axios/" class="post-category">
+                                axios
                             </a>
                         
                     </div>
@@ -461,19 +467,35 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><strong>Tip：框架是用了vue</strong><br><strong>href=”javascript:阻止刷新页面或跳转</strong></p>
-<pre class=" language-javascript"><code class="language-javascript"><span class="token operator">&lt;</span>a href<span class="token operator">=</span><span class="token string">"javascript:;"</span> @click<span class="token operator">=</span><span class="token string">"addfile"</span><span class="token operator">></span><span class="token punctuation">{</span><span class="token punctuation">{</span>listext<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>text<span class="token punctuation">}</span><span class="token punctuation">}</span><span class="token operator">&lt;</span><span class="token operator">/</span>a<span class="token operator">></span>
-<span class="token operator">&lt;</span>input type<span class="token operator">=</span><span class="token string">"file"</span> ref<span class="token operator">=</span><span class="token string">"fileInput"</span> <span class="token keyword">class</span><span class="token operator">=</span><span class="token string">"inputfile"</span> <span class="token operator">></span></code></pre>
-<p><strong>因为仅靠a标签是做不到上传文件的，所以借助了表单的input来完成上传文件。</strong><br><em>点击a标签后触发点击input</em></p>
-<pre class=" language-js"><code class="language-js">methods<span class="token punctuation">:</span><span class="token punctuation">{</span>
-    <span class="token function">addfile</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-      <span class="token keyword">this</span><span class="token punctuation">.</span>$refs<span class="token punctuation">.</span>fileInput<span class="token punctuation">.</span><span class="token function">click</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span><span class="token punctuation">,</span>
-  <span class="token punctuation">}</span></code></pre>
-<p><strong>css部分，input的样式是要设置成隐藏</strong></p>
-<pre class=" language-css"><code class="language-css"><span class="token selector"><span class="token class">.inputfile</span></span><span class="token punctuation">{</span>
-  <span class="token property">display</span><span class="token punctuation">:</span>none<span class="token punctuation">;</span>
-<span class="token punctuation">}</span></code></pre>
+                <h2 id="qs"><a href="#qs" class="headerlink" title="qs"></a>qs</h2><p><strong>当我用了几次qs以后就发现了个坑</strong><br><strong>向后台传递数组参数的时候其实是有很多种情况的</strong></p>
+<pre class=" language-js"><code class="language-js">qs的基础使用
+<span class="token keyword">import</span> qs <span class="token keyword">from</span> <span class="token string">'qs'</span>   <span class="token comment" spellcheck="true">//引入方式</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span>qs<span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//使用方式</span>
+<span class="token keyword">this</span><span class="token punctuation">.</span>qs<span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment" spellcheck="true">//使用方式</span>
+
+<span class="token keyword">this</span><span class="token punctuation">.</span>$axios<span class="token punctuation">.</span><span class="token function">post</span><span class="token punctuation">(</span><span class="token string">'/xxx'</span><span class="token punctuation">,</span>
+        qs<span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>obj<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span>res<span class="token operator">=</span><span class="token operator">></span><span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>res<span class="token punctuation">.</span>data<span class="token punctuation">)</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>res<span class="token punctuation">.</span>data<span class="token punctuation">.</span>ret<span class="token punctuation">)</span><span class="token punctuation">{</span>
+          console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'添加成功'</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+          console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'添加失败'</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token keyword">catch</span><span class="token punctuation">(</span>err<span class="token operator">=</span><span class="token operator">></span><span class="token punctuation">{</span>
+        console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
+<p><strong>arrayFormat可以格式化你的数组参数，有三种形式</strong></p>
+<pre class=" language-js"><code class="language-js">
+qs<span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span><span class="token punctuation">{</span> a<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'c'</span><span class="token punctuation">]</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> arrayFormat<span class="token punctuation">:</span> <span class="token string">'indices'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// 'a[0]=b&amp;a[1]=c'</span>
+qs<span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span><span class="token punctuation">{</span> a<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'c'</span><span class="token punctuation">]</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> arrayFormat<span class="token punctuation">:</span> <span class="token string">'brackets'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// 'a[]=b&amp;a[]=c'</span>
+qs<span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span><span class="token punctuation">{</span> a<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'c'</span><span class="token punctuation">]</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> arrayFormat<span class="token punctuation">:</span> <span class="token string">'repeat'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// 'a=b&amp;a=c'</span>
+</code></pre>
+<p><strong>但是我三个都试了还是解决不了我要传递的格式，即members[0].userUuid这种形式</strong><br><strong>最后面向百度编程，找到了一位好心的前辈所留经验（感谢前辈！）</strong></p>
+<pre class=" language-javascript"><code class="language-javascript">qs<span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>obj<span class="token punctuation">,</span><span class="token punctuation">{</span>arrayFormat<span class="token punctuation">:</span> <span class="token string">'indices'</span><span class="token punctuation">,</span> allowDots<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">//有了后面这一条代码，就把members[0][userUuid]转成了想要的members[0].userUuid</span></code></pre>
 
             </div>
             <hr/>
@@ -499,7 +521,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://wyqvong.github.io/2020/01/19/zu-zhi-a-biao-qian-shua-xin-ye-mian-huo-tiao-zhuan-bing-shi-xian-shang-chuan-wen-jian-gong-neng/">https://wyqvong.github.io/2020/01/19/zu-zhi-a-biao-qian-shua-xin-ye-mian-huo-tiao-zhuan-bing-shi-xian-shang-chuan-wen-jian-gong-neng/</a>
+                    <a href="https://wyqvong.github.io/2020/01/19/vue-shi-yong-axios-qs-xiang-hou-tai-chuan-di-can-shu-chuan-di-shu-zu-can-shu-chuan-di-bao-han-dui-xiang-de-shu-zu-can-shu-de-jie-jue-fang-fa/">https://wyqvong.github.io/2020/01/19/vue-shi-yong-axios-qs-xiang-hou-tai-chuan-di-can-shu-chuan-di-shu-zu-can-shu-chuan-di-bao-han-dui-xiang-de-shu-zu-can-shu-de-jie-jue-fang-fa/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -537,12 +559,16 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/HTML/">
-                                    <span class="chip bg-color">HTML</span>
+                                <a href="/tags/vue-js/">
+                                    <span class="chip bg-color">vue.js</span>
                                 </a>
                             
-                                <a href="/tags/a%E6%A0%87%E7%AD%BE/">
-                                    <span class="chip bg-color">a标签</span>
+                                <a href="/tags/axios/">
+                                    <span class="chip bg-color">axios</span>
+                                </a>
+                            
+                                <a href="/tags/qs/">
+                                    <span class="chip bg-color">qs</span>
                                 </a>
                             
                         </div>
@@ -712,23 +738,22 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/01/19/git-chang-yong-zhi-ling-yi-ji-git-zai-vscode-zhong-de-shi-yong/">
+                <a href="/2020/01/19/java-suan-fa-jin-zhi-zhuan-huan/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="git常用指令以及git在vscode中的使用">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="java算法--进制转换">
                         
-                        <span class="card-title">git常用指令以及git在vscode中的使用</span>
+                        <span class="card-title">java算法--进制转换</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
-   git常用指令   Git基本常用命令如下：
-　　mkdir：         XX (创建一个空目录 XX指目录名)
-　　pwd：          显示当前目录的路径。
-　　git init          把当前的目录变成可
+                            进制转换原理    十进制 转 二进制：
+原理: 对十进制数进行除 2 运算取余。
+  6 --&gt; 110  二进制 转 十进制 原理: 二进制 乘以 2 的n次幂 的过程
+  110 -&gt;0*2的0次幂 + 1*2的1次幂+ 
                         
                     </div>
                     <div class="publish-info">
@@ -739,8 +764,8 @@
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/git/" class="post-category">
-                                    git
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                    算法
                                 </a>
                             
                             
@@ -750,8 +775,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/git/">
-                        <span class="chip bg-color">git</span>
+                    <a href="/tags/java/">
+                        <span class="chip bg-color">java</span>
+                    </a>
+                    
+                    <a href="/tags/%E7%AE%97%E6%B3%95/">
+                        <span class="chip bg-color">算法</span>
                     </a>
                     
                 </div>
@@ -765,19 +794,21 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/01/19/hello-world/">
+                <a href="/2020/01/19/vue-cli-ming-ling-ji-vue-cli-de-pei-zhi-wen-jian-jie-xi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="vue-cli命令及vue-cli的配置文件解析">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">vue-cli命令及vue-cli的配置文件解析</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex
+                            vue init命令用vue init命令来初始化项目，如下：
+vue init &lt;template-name> &lt;project-name>
+init：表示要用vue-cli来初始化项目&lt; template-name&g
                         
                     </div>
                     <div class="publish-info">
@@ -786,11 +817,27 @@
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            wyqvong
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/vue-cli/" class="post-category">
+                                    vue-cli
+                                </a>
+                            
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/vue-cli/">
+                        <span class="chip bg-color">vue-cli</span>
+                    </a>
+                    
+                    <a href="/tags/vue-js/">
+                        <span class="chip bg-color">vue.js</span>
+                    </a>
+                    
                 </div>
                 
             </div>
