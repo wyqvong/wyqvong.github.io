@@ -4,9 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="github">
-    <meta name="description" content="
-当我们把项目上传到github仓库上时，github会自动识别你的代码并且判断归为哪一类语言，而这往往会显示错误的语言，例如我上传了html+css+js+java+等等很多混杂的文件，但是却被自动识别为html类别解决方法：在项目的根目">
+    <meta name="keywords" content="Mongodb">
+    <meta name="description" content="(node:9648) DeprecationWarning: current Server Discovery and Monitoring engine is deprecated, and will be removed in a f">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>git常用指令以及git在vscode中的使用 | Vong&#39;s</title>
+    <title>mongodb 解决报错 TypeError_ db.collection is not a function | Vong&#39;s</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -282,12 +281,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">git常用指令以及git在vscode中的使用</h1>
+                    <h1 class="description center-align post-title">mongodb 解决报错 TypeError_ db.collection is not a function</h1>
                 </div>
             </div>
         </div>
@@ -404,8 +403,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/github/">
-                                <span class="chip bg-color">github</span>
+                            <a href="/tags/Mongodb/">
+                                <span class="chip bg-color">Mongodb</span>
                             </a>
                         
                     </div>
@@ -416,8 +415,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/github/" class="post-category">
-                                github
+                            <a href="/categories/Mongodb/" class="post-category">
+                                Mongodb
                             </a>
                         
                     </div>
@@ -429,7 +428,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-02-15
+                    2020-03-03
                 </div>
                 
 
@@ -456,12 +455,63 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <blockquote>
-<p>当我们把项目上传到github仓库上时，github会自动识别你的代码并且判断归为哪一类语言，而这往往会显示错误的语言，例如我上传了html+css+js+java+等等很多混杂的文件，但是却被自动识别为html类别<br>解决方法：<br>在项目的根目录下添加.gitattributes文件<br>并且在文件里写入以下代码</p>
+                <pre class=" language-bash"><code class="language-bash"><span class="token punctuation">(</span>node:9648<span class="token punctuation">)</span> DeprecationWarning: current Server Discovery and Monitoring engine is deprecated, and will be removed <span class="token keyword">in</span> a future version. To use the new Server Discover and Monitoring engine, pass option <span class="token punctuation">{</span> useUnifiedTopology: <span class="token boolean">true</span> <span class="token punctuation">}</span> to the MongoClient constructor.G:\eduproject\edu\node_modules\mongodb\lib\topologies\server.js:294
+          throw err<span class="token punctuation">;</span>
+          ^
+
+TypeError: db.collection is not a <span class="token keyword">function</span></code></pre>
+<blockquote>
+<p>本来想使用 MongoDB 数据库的 collection 方法来获取合集,结果出现了这个报错。</p>
 </blockquote>
-<pre class=" language-bash"><code class="language-bash">*.js linguist-language<span class="token operator">=</span>java//将.js结尾的文件当做java文件
-*.css linguist-language<span class="token operator">=</span>java//将.css结尾的文件当做java文件
-*.html linguist-language<span class="token operator">=</span>java//将.html结尾的文件当做java文件</code></pre>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><blockquote>
+<p>因为mongodb3.0的语法改变，所以要么把安装的版本降低，要么使用3.0的语法去调用。</p>
+</blockquote>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token comment" spellcheck="true">// 原始 API 2.0写法</span>
+
+    <span class="token comment" spellcheck="true">//1.打开连接</span>
+    MongoClient<span class="token punctuation">.</span><span class="token function">connect</span><span class="token punctuation">(</span>url<span class="token punctuation">,</span> <span class="token punctuation">(</span>err<span class="token punctuation">,</span> db<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> err
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">//2.操作数据库</span>
+        db
+            <span class="token punctuation">.</span><span class="token function">collection</span><span class="token punctuation">(</span><span class="token string">'your colleactionsName'</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">insertOne</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>body<span class="token punctuation">,</span> <span class="token punctuation">(</span>err<span class="token punctuation">,</span> result<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token keyword">throw</span> err
+                <span class="token punctuation">}</span>
+                console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span>
+                res<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+                    err_code<span class="token punctuation">:</span> <span class="token number">0</span>
+                <span class="token punctuation">}</span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token comment" spellcheck="true">//3.关闭连接</span>
+        db<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token comment" spellcheck="true">//3.0版本代码</span>
+<span class="token comment" spellcheck="true">//3.0 版本的回调函数里的 (err,db) 其中db返回的实际上是尝试访问的对象的父对象，为了访问正确的对象，就需要再引用你的数据库名，然后通过这次引用的赋值的 db 变量 就可以调用collection方法了</span>
+
+    <span class="token comment" spellcheck="true">//1.打开连接</span>
+    MongoClient<span class="token punctuation">.</span><span class="token function">connect</span><span class="token punctuation">(</span>url<span class="token punctuation">,</span> <span class="token punctuation">(</span>err<span class="token punctuation">,</span> client<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">throw</span> err
+        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">//2.操作数据库</span>
+        <span class="token keyword">const</span> db <span class="token operator">=</span>client<span class="token punctuation">.</span><span class="token function">db</span><span class="token punctuation">(</span><span class="token string">'数据库名'</span><span class="token punctuation">)</span>
+        db
+            <span class="token punctuation">.</span><span class="token function">collection</span><span class="token punctuation">(</span><span class="token string">'your colleactionsName'</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">insertOne</span><span class="token punctuation">(</span>req<span class="token punctuation">.</span>body<span class="token punctuation">,</span> <span class="token punctuation">(</span>err<span class="token punctuation">,</span> result<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> <span class="token punctuation">{</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>err<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                    <span class="token keyword">throw</span> err
+                <span class="token punctuation">}</span>
+                console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span>
+                res<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+                    err_code<span class="token punctuation">:</span> <span class="token number">0</span>
+                <span class="token punctuation">}</span><span class="token punctuation">)</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span>
+        <span class="token comment" spellcheck="true">//3.关闭连接</span>
+        client<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span></code></pre>
 
             </div>
             <hr/>
@@ -487,7 +537,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://wyqvong.github.io/2020/02/15/github-xiu-gai-xiang-mu-yu-yan-lei-xing/">https://wyqvong.github.io/2020/02/15/github-xiu-gai-xiang-mu-yu-yan-lei-xing/</a>
+                    <a href="https://wyqvong.github.io/2020/03/03/mongodb-jie-jue-bao-cuo-typeerror-db.collection-is-not-a-function/">https://wyqvong.github.io/2020/03/03/mongodb-jie-jue-bao-cuo-typeerror-db.collection-is-not-a-function/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -525,8 +575,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/github/">
-                                    <span class="chip bg-color">github</span>
+                                <a href="/tags/Mongodb/">
+                                    <span class="chip bg-color">Mongodb</span>
                                 </a>
                             
                         </div>
@@ -696,31 +746,35 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/03/03/mongodb-jie-jue-bao-cuo-typeerror-db.collection-is-not-a-function/">
+                <a href="/2020/03/06/wei-xin-xiao-cheng-xu-huo-qu-wx-for-xia-biao/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="mongodb 解决报错 TypeError_ db.collection is not a function">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="微信小程序获取wx_for下标">
                         
-                        <span class="card-title">mongodb 解决报错 TypeError_ db.collection is not a function</span>
+                        <span class="card-title">微信小程序获取wx_for下标</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            (node:9648) DeprecationWarning: current Server Discovery and Monitoring engine is deprecated, and will be removed in a f
+                            
+刚接触小程序，想通过看文档一边自学一边做一个简单但是刚需的小程序在使用wx:for循环button按钮的时候，我需要获取每个按钮的下标index，但是官方文档好像并没有说的很清楚，后来通过面向百度编程找到了解决方法
+
+在标签上加
+wx:f
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-03-03
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-03-06
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Mongodb/" class="post-category">
-                                    Mongodb
+                            <a href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" class="post-category">
+                                    小程序
                                 </a>
                             
                             
@@ -730,8 +784,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Mongodb/">
-                        <span class="chip bg-color">Mongodb</span>
+                    <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">
+                        <span class="chip bg-color">小程序</span>
                     </a>
                     
                 </div>
@@ -745,35 +799,32 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/02/01/cheng-chang-zhi-lu-gei-zi-ji-da-qiang-xin-zhen/">
+                <a href="/2020/02/15/github-xiu-gai-xiang-mu-yu-yan-lei-xing/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="《成长之路》——给自己打强心针。">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="git常用指令以及git在vscode中的使用">
                         
-                        <span class="card-title">《成长之路》——给自己打强心针。</span>
+                        <span class="card-title">git常用指令以及git在vscode中的使用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             
-——==想要坚持下去就必须不断给自己打强心针.==
-每个人都有自己的==触点、泪点、笑点==，所以大家也都拥有属于各自的强心针。
- 对我来说，我虽不喜纷争，但却也有一颗浅藏的好胜心。我的其中一只强心针便就是不断鞭策我的这颗好胜心。
- 高考
+当我们把项目上传到github仓库上时，github会自动识别你的代码并且判断归为哪一类语言，而这往往会显示错误的语言，例如我上传了html+css+js+java+等等很多混杂的文件，但是却被自动识别为html类别解决方法：在项目的根目
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-01
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-15
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%96%87%E7%AB%A0/" class="post-category">
-                                    文章
+                            <a href="/categories/github/" class="post-category">
+                                    github
                                 </a>
                             
                             
@@ -783,12 +834,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF/">
-                        <span class="chip bg-color">成长之路</span>
-                    </a>
-                    
-                    <a href="/tags/%E6%88%90%E9%95%BF%E6%97%A5%E8%AE%B0/">
-                        <span class="chip bg-color">成长日记</span>
+                    <a href="/tags/github/">
+                        <span class="chip bg-color">github</span>
                     </a>
                     
                 </div>
