@@ -4,9 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="github">
+    <meta name="keywords" content="小程序">
     <meta name="description" content="
-当我们把项目上传到github仓库上时，github会自动识别你的代码并且判断归为哪一类语言，而这往往会显示错误的语言，例如我上传了html+css+js+java+等等很多混杂的文件，但是却被自动识别为html类别解决方法：在项目的根目">
+刚接触小程序，想通过看文档一边自学一边做一个简单但是刚需的小程序在使用wx:for循环button按钮的时候，我需要获取每个按钮的下标index，但是官方文档好像并没有说的很清楚，后来通过面向百度编程找到了解决方法
+
+在标签上加
+wx:f">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +17,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>git常用指令以及git在vscode中的使用 | Vong&#39;s</title>
+    <title>微信小程序获取wx_for下标 | Vong&#39;s</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -282,12 +285,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">git常用指令以及git在vscode中的使用</h1>
+                    <h1 class="description center-align post-title">微信小程序获取wx_for下标</h1>
                 </div>
             </div>
         </div>
@@ -404,8 +407,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/github/">
-                                <span class="chip bg-color">github</span>
+                            <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">
+                                <span class="chip bg-color">小程序</span>
                             </a>
                         
                     </div>
@@ -416,8 +419,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/github/" class="post-category">
-                                github
+                            <a href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" class="post-category">
+                                小程序
                             </a>
                         
                     </div>
@@ -429,7 +432,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-02-15
+                    2020-03-06
                 </div>
                 
 
@@ -457,11 +460,24 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <blockquote>
-<p>当我们把项目上传到github仓库上时，github会自动识别你的代码并且判断归为哪一类语言，而这往往会显示错误的语言，例如我上传了html+css+js+java+等等很多混杂的文件，但是却被自动识别为html类别<br>解决方法：<br>在项目的根目录下添加.gitattributes文件<br>并且在文件里写入以下代码</p>
+<p>刚接触小程序，想通过看文档一边自学一边做一个简单但是刚需的小程序<br>在使用wx:for循环button按钮的时候，我需要获取每个按钮的下标index，但是官方文档好像并没有说的很清楚，后来通过面向百度编程找到了解决方法</p>
 </blockquote>
-<pre class=" language-bash"><code class="language-bash">*.js linguist-language<span class="token operator">=</span>java//将.js结尾的文件当做java文件
-*.css linguist-language<span class="token operator">=</span>java//将.css结尾的文件当做java文件
-*.html linguist-language<span class="token operator">=</span>java//将.html结尾的文件当做java文件</code></pre>
+<p>在标签上加</p>
+<pre class=" language-javascript"><code class="language-javascript">wx<span class="token punctuation">:</span><span class="token keyword">for</span><span class="token operator">-</span>index<span class="token operator">=</span><span class="token string">"index"</span>   data<span class="token operator">-</span>index<span class="token operator">=</span><span class="token string">"{{index}}"</span></code></pre>
+<p>即</p>
+<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name"><span class="token namespace">wx:</span>for</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>{{picks}}<span class="token punctuation">"</span></span> 
+        <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>primary<span class="token punctuation">"</span></span> 
+        <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>pick_button<span class="token punctuation">"</span></span> 
+        <span class="token attr-name">size</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mini<span class="token punctuation">"</span></span> 
+        <span class="token attr-name">bindtap</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>getIndex<span class="token punctuation">"</span></span> 
+        <span class="token attr-name"><span class="token namespace">wx:</span>for-index</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>index<span class="token punctuation">"</span></span>
+        <span class="token attr-name">data-index</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>{{index}}<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      {{item.name}}
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span></code></pre>
+<p>在js那边就是</p>
+<pre class=" language-javascript"><code class="language-javascript">getIndex<span class="token punctuation">:</span> <span class="token keyword">function</span> <span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>e<span class="token punctuation">.</span>target<span class="token punctuation">.</span>dataset<span class="token punctuation">.</span>index<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span></code></pre>
 
             </div>
             <hr/>
@@ -487,7 +503,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://wyqvong.github.io/2020/02/15/github-xiu-gai-xiang-mu-yu-yan-lei-xing/">https://wyqvong.github.io/2020/02/15/github-xiu-gai-xiang-mu-yu-yan-lei-xing/</a>
+                    <a href="https://wyqvong.github.io/2020/03/06/wei-xin-xiao-cheng-xu-huo-qu-wx-for-xia-biao/">https://wyqvong.github.io/2020/03/06/wei-xin-xiao-cheng-xu-huo-qu-wx-for-xia-biao/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -525,8 +541,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/github/">
-                                    <span class="chip bg-color">github</span>
+                                <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">
+                                    <span class="chip bg-color">小程序</span>
                                 </a>
                             
                         </div>
@@ -692,9 +708,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2020/03/06/wei-xin-xiao-cheng-xu-huo-qu-wx-for-xia-biao/">
                     <div class="card-image">
@@ -716,9 +733,9 @@ wx:f
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-03-06
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-03-06
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -731,6 +748,7 @@ wx:f
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -749,35 +767,32 @@ wx:f
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/02/01/cheng-chang-zhi-lu-gei-zi-ji-da-qiang-xin-zhen/">
+                <a href="/2020/02/15/github-xiu-gai-xiang-mu-yu-yan-lei-xing/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="《成长之路》——给自己打强心针。">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="git常用指令以及git在vscode中的使用">
                         
-                        <span class="card-title">《成长之路》——给自己打强心针。</span>
+                        <span class="card-title">git常用指令以及git在vscode中的使用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
                             
-——==想要坚持下去就必须不断给自己打强心针.==
-每个人都有自己的==触点、泪点、笑点==，所以大家也都拥有属于各自的强心针。
- 对我来说，我虽不喜纷争，但却也有一颗浅藏的好胜心。我的其中一只强心针便就是不断鞭策我的这颗好胜心。
- 高考
+当我们把项目上传到github仓库上时，github会自动识别你的代码并且判断归为哪一类语言，而这往往会显示错误的语言，例如我上传了html+css+js+java+等等很多混杂的文件，但是却被自动识别为html类别解决方法：在项目的根目
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-01
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-15
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%96%87%E7%AB%A0/" class="post-category">
-                                    文章
+                            <a href="/categories/github/" class="post-category">
+                                    github
                                 </a>
                             
                             
@@ -787,12 +802,8 @@ wx:f
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%88%90%E9%95%BF%E4%B9%8B%E8%B7%AF/">
-                        <span class="chip bg-color">成长之路</span>
-                    </a>
-                    
-                    <a href="/tags/%E6%88%90%E9%95%BF%E6%97%A5%E8%AE%B0/">
-                        <span class="chip bg-color">成长日记</span>
+                    <a href="/tags/github/">
+                        <span class="chip bg-color">github</span>
                     </a>
                     
                 </div>
